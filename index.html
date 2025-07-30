@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget Tracker</title>
+    <link rel ="stylesheet" href ="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Personal Budget Tracker</h1>
+            <p class="subtitle">Track your income and expenses with real-time currency conversion</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Summary Cards -->
+            <div class="summary">
+                <div class="summary-card">
+                    <h3>Total Income</h3>
+                    <div class="amount" id="totalIncome">$0.00</div>
+                </div>
+                <div class="summary-card expense">
+                    <h3>Total Expenses</h3>
+                    <div class="amount" id="totalExpenses">$0.00</div>
+                </div>
+                <div class="summary-card balance">
+                    <h3>Balance</h3>
+                    <div class="amount" id="balance">$0.00</div>
+                </div>
+            </div>
+
+            <!-- Currency Conversion Section -->
+            <div class="currency-section">
+                <h2> Currency Converter</h2>
+                <div class="currency-controls">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="convertAmount" placeholder="Enter amount" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>From</label>
+                        <select id="fromCurrency">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>To</label>
+                        <select id="toCurrency">
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                        </select>
+                    </div>
+                    <button onclick="convertCurrency()">Convert</button>
+                </div>
+                <div id="conversionResult" style="margin-top: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50;"></div>
+            </div>
+
+            <!-- Add Transaction Form -->
+            <div class="card">
+                <h2>Add Transaction</h2>
+                <div id="errorMessage"></div>
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="description" required placeholder="e.g., Grocery shopping">
+                    </div>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="amount" required step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select id="type" required>
+                            <option value="">Select type</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="category" required>
+                            <option value="">Select category</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="transport">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="bills">Bills & Utilities</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <button type="submit">Add Transaction</button>
+                </form>
+            </div>
+
+            <!-- Budget Goals -->
+            <div class="card">
+                <h2>Monthly Budget Goal</h2>
+                <div class="form-group">
+                    <label>Set Monthly Expense Limit</label>
+                    <input type="number" id="budgetGoal" placeholder="1000.00" step="0.01">
+                    <button onclick="setBudgetGoal()" style="margin-top: 10px;">Set Goal</button>
+                </div>
+                <div id="budgetStatus" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- Transaction List -->
+            <div class="transactions">
+                <div class="card">
+                    <h2>Transaction History</h2>
+                    <div class="filters">
+                        <select id="filterType" onchange="filterTransactions()">
+                            <option value="all">All Types</option>
+                            <option value="income">Income Only</option>
+                            <option value="expense">Expense Only</option>
+                        </select>
+                        <select id="filterCategory" onchange="filterTransactions()">
+                            <option value="all">All Categories</option>
+                            <option value="food">Food & Dining</option>
+                            <option value="transport">Transportation</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="shopping">Shopping</option>
+                            <option value="bills">Bills & Utilities</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="salary">Salary</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <button onclick="sortTransactions('date')">Sort by Date</button>
+                        <button onclick="sortTransactions('amount')">Sort by Amount</button>
+                        <button onclick="clearAllTransactions()" class="btn-danger">Clear All</button>
+                    </div>
+                    <div class="transaction-list" id="transactionList">
+                        <div class="loading">No transactions yet. Add your first transaction above!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer-->
+    <footer class="footer">
+        <p>&copy; 2025 Budget Tracker.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+    
