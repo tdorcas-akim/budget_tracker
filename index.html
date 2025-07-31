@@ -3,14 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Budget Tracker</title>
-    <link rel ="stylesheet" href ="styles.css">
-</head>
-<body>
-    <div class="container">
+    <title> Budget Tracker</title>
+    <link rel="stylesheet" href ="styles.css">
+    </head>
+    <body>
+    <!-- Authentication Screen -->
+    <div id="authScreen" class="auth-container">
+        <div class="auth-header">
+            <h1>Budget Tracker</h1>
+            <p>Manage your finances effectively</p>
+        </div>
+        <div class="auth-content">
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div id="loginMessage"></div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" style="width: 100%;">Login</button>
+                <div class="auth-switch">
+                    Don't have an account? <a onclick="switchAuthTab('signup')">Create one here</a>
+                </div> 
+            </form> 
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+                <div id="signupMessage"></div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="signupEmail" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create a password" minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required placeholder="Confirm your password">
+                </div>
+                <button type="submit" style="width: 100%;">Sign Up</button>
+                <div class="auth-switch">
+                    Already have an account? <a onclick="switchAuthTab('login')">Sign in here</a>
+                </div>
+            </form> 
+        </div> 
+    </div> 
+
+    <!-- Main Application -->
+    <div id="mainApp" class="container hidden">
         <header>
-            <h1> Personal Budget Tracker</h1>
-            <p class="subtitle">Track your income and expenses with real-time currency conversion</p>
+            <div class="user-info">
+                <span id="userWelcome">Welcome!</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+            <h1>Personal Budget Tracker</h1>
+            <p class="subtitle">Track your income and expenses</p>
         </header>
 
         <div class="main-content">
@@ -32,7 +88,7 @@
 
             <!-- Currency Conversion Section -->
             <div class="currency-section">
-                <h2> Currency Converter</h2>
+                <h2>Currency Converter</h2>
                 <div class="currency-controls">
                     <div class="form-group">
                         <label>Amount</label>
@@ -43,12 +99,12 @@
                         <select id="fromCurrency">
                             <option value="USD">USD - US Dollar</option>
                             <option value="EUR">EUR - Euro</option>
-                            <option value="RWF">RWF - Rwandan Franc</option>
-                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="GBP">GBP - British Pound</option>
                             <option value="JPY">JPY - Japanese Yen</option>
                             <option value="CAD">CAD - Canadian Dollar</option>
                             <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="CHF">CHF - Swiss Franc</option>
                             <option value="CNY">CNY - Chinese Yuan</option>
                         </select>
@@ -58,14 +114,15 @@
                         <select id="toCurrency">
                             <option value="EUR">EUR - Euro</option>
                             <option value="USD">USD - US Dollar</option>
-                            <option value="RWF">RWF - Rwandan Franc</option>
-                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="GBP">GBP - British Pound</option>
                             <option value="JPY">JPY - Japanese Yen</option>
                             <option value="CAD">CAD - Canadian Dollar</option>
                             <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="CHF">CHF - Swiss Franc</option>
                             <option value="CNY">CNY - Chinese Yuan</option>
+                           
                         </select>
                     </div>
                     <button onclick="convertCurrency()">Convert</button>
@@ -105,7 +162,6 @@
                             <option value="bills">Bills & Utilities</option>
                             <option value="healthcare">Healthcare</option>
                             <option value="salary">Salary</option>
-                            <option value="freelance">Freelance</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
@@ -128,7 +184,7 @@
                 <div id="budgetStatus" style="margin-top: 15px;"></div>
             </div>
 
-            <!-- Transaction List -->
+            <!-- Transaction History -->
             <div class="transactions">
                 <div class="card">
                     <h2>Transaction History</h2>
@@ -147,7 +203,6 @@
                             <option value="bills">Bills & Utilities</option>
                             <option value="healthcare">Healthcare</option>
                             <option value="salary">Salary</option>
-                            <option value="freelance">Freelance</option>
                             <option value="other">Other</option>
                         </select>
                         <button onclick="sortTransactions('date')">Sort by Date</button>
@@ -161,12 +216,6 @@
             </div>
         </div>
     </div>
-    <!--footer-->
-    <footer class="footer">
-        <p>&copy; 2025 Budget Tracker.</p>
-    </footer>
-
     <script src="script.js"></script>
-</body>
-</html>
-    
+    </body>
+    </html>
