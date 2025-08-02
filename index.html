@@ -7,122 +7,177 @@
     <link rel="stylesheet" href ="styles.css">
     </head>
     <body>
-    <!-- Authentication Screen -->
-    <div id="authScreen" class="auth-container">
-        <div class="auth-header">
+<!-- Login & signup area -->
+    <div id="entryZone" class="auth-portal">
+        <div class="portal-header">
             <h1>Budget Tracker</h1>
-            <p>Manage your finances effectively</p>
+            <p>Secure your finances</p>
         </div>
-        <div class="auth-content">
-            <!-- Login Form -->
-            <form id="loginForm" class="auth-form active">
+        <div class="auth-forms-wrapper">
+            <!-- Login section -->
+            <form id="loginForm" class="login-signup-form active">
                 <div id="loginMessage"></div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Email</label>
                     <input type="email" id="loginEmail" required placeholder="Enter your email">
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                    <div class="secret-input-wrapper">
+                        <input type="password" id="loginPassword" required placeholder="Enter your password">
+                        <button type="button" class="peek-button" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" style="width: 100%;">Login</button>
-                <div class="auth-switch">
-                    Don't have an account? <a onclick="switchAuthTab('signup')">Create one here</a>
-                </div> 
-            </form> 
+                <div class="entry-switch">
+                    <a href="#" class="switch-link" onclick="showForgotPassword()">Forgot password?</a><br>
+                    Don't have an account? <a href="#" class="switch-link" onclick="switchAuthTab('signup')">Create one here</a>
+                </div>
+            </form>
 
-            <!-- Signup Form -->
-            <form id="signupForm" class="auth-form">
+            <!-- Signup section -->
+            <form id="signupForm" class="login-signup-form">
                 <div id="signupMessage"></div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Full Name</label>
                     <input type="text" id="signupName" required placeholder="Enter your full name">
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Email</label>
                     <input type="email" id="signupEmail" required placeholder="Enter your email">
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="signupPassword" required placeholder="Create a password" minlength="6">
+                    <div class="secret-input-wrapper">
+                        <input type="password" id="signupPassword" required placeholder="Create a password" minlength="6">
+                        <button type="button" class="peek-button" onclick="togglePassword('signupPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Confirm Password</label>
-                    <input type="password" id="signupConfirmPassword" required placeholder="Confirm your password">
+                    <div class="secret-input-wrapper">
+                        <input type="password" id="signupConfirmPassword" required placeholder="Confirm your password">
+                        <button type="button" class="peek-button" onclick="togglePassword('signupConfirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
                 <button type="submit" style="width: 100%;">Sign Up</button>
-                <div class="auth-switch">
-                    Already have an account? <a onclick="switchAuthTab('login')">Sign in here</a>
+                <div class="entry-switch">
+                    Already have an account? <a href="#" class="switch-link" onclick="switchAuthTab('login')">Sign in here</a>
                 </div>
-            </form> 
-        </div> 
-    </div> 
+            </form>
 
-    <!-- Main Application -->
-    <div id="mainApp" class="container hidden">
-        <header>
-            <div class="user-info">
+            <!-- Forgot Password section -->
+            <form id="forgotPasswordForm" class="login-signup-form">
+                <div id="forgotMessage"></div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" id="forgotEmail" required placeholder="Enter your email">
+                </div>
+                <button type="submit" style="width: 100%;">Reset Password</button>
+                <div class="entry-switch">
+                    Remember your password? <a href="#" class="switch-link" onclick="switchAuthTab('login')">Back to login</a>
+                </div>
+            </form>
+
+            <!-- Reset Password section -->
+            <form id="resetPasswordForm" class="login-signup-form">
+                <div id="resetMessage"></div>
+                <div class="input-group">
+                    <label>New Password</label>
+                    <div class="secret-input-wrapper">
+                        <input type="password" id="newPassword" required placeholder="Enter new password" minlength="6">
+                        <button type="button" class="peek-button" onclick="togglePassword('newPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Confirm New Password</label>
+                    <div class="secret-input-wrapper">
+                        <input type="password" id="confirmNewPassword" required placeholder="Confirm new password">
+                        <button type="button" class="peek-button" onclick="togglePassword('confirmNewPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" style="width: 100%;">Update Password</button>
+                <div class="entry-switch">
+                    <a href="#" class="switch-link" onclick="switchAuthTab('login')">Back to login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main dashboard -->
+    <div id="mainPlayground" class="main-vibes vanish">
+        <header class="top-banner">
+            <div class="profile-bar">
                 <span id="userWelcome">Welcome!</span>
-                <button class="logout-btn" onclick="logout()">Logout</button>
+                <button class="exit-button" onclick="logout()">Logout</button>
             </div>
             <h1>Personal Budget Tracker</h1>
             <p class="subtitle">Track your income and expenses</p>
         </header>
 
-        <div class="main-content">
-            <!-- Summary Cards -->
-            <div class="summary">
-                <div class="summary-card">
+        <div class="app-playground">
+            <!-- Financial overview cards -->
+            <div class="money-overview">
+                <div class="cash-card">
                     <h3>Total Income</h3>
-                    <div class="amount" id="totalIncome">$0.00</div>
+                    <div class="amount" id="totalIncome">0.00</div>
                 </div>
-                <div class="summary-card expense">
+                <div class="cash-card outgoing">
                     <h3>Total Expenses</h3>
-                    <div class="amount" id="totalExpenses">$0.00</div>
+                    <div class="amount" id="totalExpenses">0.00</div>
                 </div>
-                <div class="summary-card balance">
+                <div class="cash-card balance">
                     <h3>Balance</h3>
-                    <div class="amount" id="balance">$0.00</div>
+                    <div class="amount" id="balance">0.00</div>
                 </div>
             </div>
 
-            <!-- Currency Conversion Section -->
-            <div class="currency-section">
+            <!-- Currency exchange area -->
+            <div class="exchange-zone">
                 <h2>Currency Converter</h2>
-                <div class="currency-controls">
-                    <div class="form-group">
+                <div class="currency-picker">
+                    <div class="input-group">
                         <label>Amount</label>
                         <input type="number" id="convertAmount" placeholder="Enter amount" step="0.01">
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>From</label>
                         <select id="fromCurrency">
                             <option value="USD">USD - US Dollar</option>
                             <option value="EUR">EUR - Euro</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="GBP">GBP - British Pound</option>
                             <option value="JPY">JPY - Japanese Yen</option>
                             <option value="CAD">CAD - Canadian Dollar</option>
                             <option value="AUD">AUD - Australian Dollar</option>
-                            <option value="RWF">RWF - Rwandan Franc</option>
-                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="CHF">CHF - Swiss Franc</option>
                             <option value="CNY">CNY - Chinese Yuan</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>To</label>
                         <select id="toCurrency">
                             <option value="EUR">EUR - Euro</option>
                             <option value="USD">USD - US Dollar</option>
+                            <option value="RWF">RWF - Rwandan Franc</option>
+                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="GBP">GBP - British Pound</option>
                             <option value="JPY">JPY - Japanese Yen</option>
                             <option value="CAD">CAD - Canadian Dollar</option>
                             <option value="AUD">AUD - Australian Dollar</option>
-                            <option value="RWF">RWF - Rwandan Franc</option>
-                            <option value="BIF">BIF - Burundian Franc</option>
                             <option value="CHF">CHF - Swiss Franc</option>
                             <option value="CNY">CNY - Chinese Yuan</option>
-                           
                         </select>
                     </div>
                     <button onclick="convertCurrency()">Convert</button>
@@ -130,20 +185,20 @@
                 <div id="conversionResult" style="margin-top: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50;"></div>
             </div>
 
-            <!-- Add Transaction Form -->
-            <div class="card">
+            <!-- Transaction creation form -->
+            <div class="info-box">
                 <h2>Add Transaction</h2>
                 <div id="errorMessage"></div>
                 <form id="transactionForm">
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>Description</label>
                         <input type="text" id="description" required placeholder="e.g., Grocery shopping">
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>Amount</label>
                         <input type="number" id="amount" required step="0.01" placeholder="0.00">
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>Type</label>
                         <select id="type" required>
                             <option value="">Select type</option>
@@ -151,7 +206,7 @@
                             <option value="expense">Expense</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>Category</label>
                         <select id="category" required>
                             <option value="">Select category</option>
@@ -165,7 +220,7 @@
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label>Date</label>
                         <input type="date" id="date" required>
                     </div>
@@ -173,10 +228,10 @@
                 </form>
             </div>
 
-            <!-- Budget Goals -->
-            <div class="card">
+            <!-- Budget goal setting -->
+            <div class="info-box">
                 <h2>Monthly Budget Goal</h2>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Set Monthly Expense Limit</label>
                     <input type="number" id="budgetGoal" placeholder="1000.00" step="0.01">
                     <button onclick="setBudgetGoal()" style="margin-top: 10px;">Set Goal</button>
@@ -184,11 +239,11 @@
                 <div id="budgetStatus" style="margin-top: 15px;"></div>
             </div>
 
-            <!-- Transaction History -->
-            <div class="transactions">
-                <div class="card">
+            <!-- Transaction history -->
+            <div class="transaction-playground">
+                <div class="info-box">
                     <h2>Transaction History</h2>
-                    <div class="filters">
+                    <div class="filter-controls">
                         <select id="filterType" onchange="filterTransactions()">
                             <option value="all">All Types</option>
                             <option value="income">Income Only</option>
@@ -207,15 +262,20 @@
                         </select>
                         <button onclick="sortTransactions('date')">Sort by Date</button>
                         <button onclick="sortTransactions('amount')">Sort by Amount</button>
-                        <button onclick="clearAllTransactions()" class="btn-danger">Clear All</button>
+                        <button onclick="clearAllTransactions()" class="danger-btn">Clear All</button>
                     </div>
-                    <div class="transaction-list" id="transactionList">
-                        <div class="loading">No transactions yet. Add your first transaction above!</div>
+                    <div class="money-moves-list" id="transactionList">
+                        <div class="empty-state">No transactions yet. Add your first transaction above!</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Page footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Budget Tracker.</p>
+    </footer>
     <script src="script.js"></script>
     </body>
     </html>

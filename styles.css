@@ -1,17 +1,51 @@
-* {
+      * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        .switch-link {
+            color: #3498db;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .switch-link:hover {
+            color: #2980b9;
+        }
+
+        .secret-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .secret-input-wrapper input {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .peek-button {
+            position: absolute;
+            right: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .peek-button:hover {
+            color: #333;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #4a90e2 0%, #7b68ee 50%, #9966cc 100%);
+            background: linear-gradient(135deg, #4a90e2 0%, #5b7ca8 50%, #5888d1  100%);
             min-height: 100vh;
             padding: 20px;
         }
 
-        .container {
+        .main-container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
@@ -20,8 +54,7 @@
             overflow: hidden;
         }
 
-        /* Authentication Styles */
-        .auth-container {
+        .auth-portal {
             max-width: 400px;
             margin: 50px auto;
             background: white;
@@ -30,14 +63,14 @@
             overflow: hidden;
         }
 
-        .auth-header {
+        .portal-header {
             background: linear-gradient(45deg, #2c3e50, #3498db);
             color: white;
             padding: 30px;
             text-align: center;
         }
 
-        .auth-content {
+        .auth-forms-wrapper {
             padding: 30px;
         }
 
@@ -49,19 +82,19 @@
             display: none;
         }
 
-        .auth-form {
+        .login-signup-form {
             display: none;
         }
 
-        .auth-form.active {
+        .login-signup-form.active {
             display: block;
         }
 
-        .hidden {
+        .vanish {
             display: none !important;
         }
 
-        .user-info {
+        .user-corner {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -71,7 +104,7 @@
             margin-bottom: 10px;
         }
 
-        .logout-btn {
+        .exit-button {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.3);
             color: white;
@@ -81,15 +114,22 @@
             font-size: 12px;
         }
 
-        .logout-btn:hover {
+        .exit-button:hover {
             background: rgba(255,255,255,0.3);
         }
 
-        header {
+        .top-banner {
             background: linear-gradient(45deg, #2c3e50, #3498db);
             color: white;
             padding: 30px;
             text-align: center;
+        }
+
+        .profile-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         h1 {
@@ -102,14 +142,14 @@
             font-size: 1.1em;
         }
 
-        .main-content {
+        .app-playground {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             padding: 30px;
         }
 
-        .card {
+        .info-box {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 25px;
@@ -117,13 +157,13 @@
             border-left: 4px solid #3498db;
         }
 
-        .card h2 {
+        .info-box h2 {
             color: #2c3e50;
             margin-bottom: 20px;
             font-size: 1.4em;
         }
 
-        .form-group {
+        .input-group {
             margin-bottom: 15px;
         }
 
@@ -149,7 +189,7 @@
         }
 
         button {
-            background: linear-gradient(45deg, #3498db, #2980b9);
+            background: linear-gradient(45deg, #206999, #164666);
             color: white;
             border: none;
             padding: 12px 24px;
@@ -165,15 +205,15 @@
             box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
         }
 
-        .btn-danger {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        .danger-btn {
+            background: linear-gradient(45deg, #4f2472, #352220);
         }
 
-        .btn-danger:hover {
+        .danger-btn:hover {
             box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
         }
 
-        .summary {
+        .money-overview {
             grid-column: span 2;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -181,7 +221,7 @@
             margin-bottom: 20px;
         }
 
-        .summary-card {
+        .cash-card {
             background: linear-gradient(45deg, #6c757d, #5a6268);
             color: white;
             padding: 20px;
@@ -189,26 +229,26 @@
             text-align: center;
         }
 
-        .summary-card.expense {
+        .cash-card.outgoing {
             background: linear-gradient(45deg, #6c757d, #5a6268);
         }
 
-        .summary-card.balance {
+        .cash-card.balance {
             background: linear-gradient(45deg, #6c757d, #5a6268);
         }
 
-        .summary-card h3 {
+        .cash-card h3 {
             font-size: 0.9em;
             margin-bottom: 10px;
             opacity: 0.9;
         }
 
-        .summary-card .amount {
+        .cash-card .amount {
             font-size: 2em;
             font-weight: bold;
         }
 
-        .currency-section {
+        .exchange-zone {
             grid-column: span 2;
             background: #fff3cd;
             border-left: 4px solid #ffc107;
@@ -217,32 +257,32 @@
             margin-bottom: 20px;
         }
 
-        .currency-controls {
+        .currency-picker {
             display: flex;
             gap: 15px;
             align-items: end;
             flex-wrap: wrap;
         }
 
-        .transactions {
+        .transaction-playground {
             grid-column: span 2;
         }
 
-        .filters {
+        .filter-controls {
             display: flex;
             gap: 15px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
-        .transaction-list {
+        .money-moves-list {
             max-height: 400px;
             overflow-y: auto;
             border: 1px solid #e1e8ed;
             border-radius: 6px;
         }
 
-        .transaction-item {
+        .money-move-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -251,38 +291,44 @@
             transition: background-color 0.2s;
         }
 
-        .transaction-item:hover {
+        .money-move-item:hover {
             background-color: #f8f9fa;
         }
 
-        .transaction-item:last-child {
+        .money-move-item:last-child {
             border-bottom: none;
         }
 
-        .transaction-info h4 {
+        .move-details h4 {
             color: #2c3e50;
             margin-bottom: 5px;
         }
 
-        .transaction-info p {
+        .move-details p {
             color: #666;
             font-size: 0.9em;
         }
 
-        .transaction-amount {
+        .move-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .move-amount {
             font-weight: bold;
             font-size: 1.1em;
         }
 
-        .income {
+        .incoming {
             color: #27ae60;
         }
 
-        .expense {
+        .outgoing {
             color: #e74c3c;
         }
 
-        .error {
+        .fail-msg {
             background: #f8d7da;
             color: #721c24;
             padding: 10px;
@@ -291,7 +337,7 @@
             border-left: 4px solid #f5c6cb;
         }
 
-        .success {
+        .win-msg {
             background: #d4edda;
             color: #155724;
             padding: 10px;
@@ -300,52 +346,66 @@
             border-left: 4px solid #c3e6cb;
         }
 
-        .loading {
+        .empty-state {
             text-align: center;
             padding: 20px;
             color: #666;
         }
 
-        .auth-switch {
+        .auth-switcher {
             text-align: center;
             margin-top: 20px;
             color: #666;
         }
 
-        .auth-switch a {
+        .auth-switcher a {
             color: #3498db;
             text-decoration: none;
             cursor: pointer;
         }
 
-        .auth-switch a:hover {
+        .auth-switcher a:hover {
             text-decoration: underline;
         }
 
+        .entry-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .footer {
+            background: #5e86b9;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
         @media (max-width: 768px) {
-            .main-content {
+            .app-playground {
                 grid-template-columns: 1fr;
                 gap: 20px;
                 padding: 20px;
             }
             
-            .summary {
+            .money-overview {
                 grid-column: span 1;
             }
             
-            .currency-section {
+            .exchange-zone {
                 grid-column: span 1;
             }
             
-            .transactions {
+            .transaction-playground {
                 grid-column: span 1;
             }
             
-            .currency-controls {
+            .currency-picker {
                 flex-direction: column;
             }
             
-            .filters {
+            .filter-controls {
                 flex-direction: column;
             }
         }
