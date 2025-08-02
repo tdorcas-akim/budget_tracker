@@ -1,64 +1,25 @@
-FROM ubuntu:24.04
+# Use a lightweight Nginx image specifically designed for serving web content.
+# This is much smaller and more efficient for static sites than a full Ubuntu image.
+FROM nginx:alpine
 
-ENV DEBIAN_FRONTEND=noninteractive
+# Copy your custom Nginx configuration file into the container.
+# This replaces the default Nginx configuration.
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Install Node.js and nginx
-RUN apt-get update -qq && \
-    apt-get install -y --no-install-recommends \
-        curl openssh-server sudo iputils-ping ca-certificates nginx && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    mkdir /run/sshd && \
-    if ! id -u ubuntu >/dev/null 2>&1; then \
-        useradd --create-home --uid 1000 --shell /bin/bash ubuntu; \
-    fi && \
-    echo 'ubuntu:pass123' | chpasswd && \
-    usermod -aG sudo ubuntu && \
-    sed -ri 's/#?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    sed -ri 's/#?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Remove the default Nginx index.html file if it exists,
+# to ensure your index.html is served instead.
+# (This line is often not strictly necessary if you copy your files to the root,
+# but it's good practice for clarity).
+RUN rm -rf /usr/share/nginx/html/*
 
-# Set working directory
-WORKDIR /app
+# Copy your application's static files (HTML, CSS, JS) into the Nginx default serving directory.
+# This assumes index.html, styles.css, script.js are in the same directory as your Dockerfile.
+COPY index.html styles.css script.js /usr/share/nginx/html/
 
-# Copy package files first for better caching
-COPY package*.json ./
+# Expose port 80. This tells Docker that the container will listen on this port.
+# Nginx is configured to listen on port 80 in the nginx.conf.
+EXPOSE 80
 
-# Install Node.js dependencies
-RUN npm install --omit=dev
-
-# Copy application files
-COPY . .
-
-# Create logs directory
-RUN mkdir -p /app/logs
-
-# Set proper permissions
-RUN chown -R ubuntu:ubuntu /app
-
-# Configure nginx
-RUN echo 'server {\n\
-    listen 80;\n\
-    location / {\n\
-        proxy_pass http://localhost:3000;\n\
-        proxy_set_header Host $host;\n\
-        proxy_set_header X-Real-IP $remote_addr;\n\
-    }\n\
-}' > /etc/nginx/sites-available/default
-
-EXPOSE 3000 22 80
-
-RUN ssh-keygen -A
-
-# Create startup script to run nginx, Node.js app and sshd
-RUN echo '#!/bin/bash\n\
-echo "🌐 Starting nginx..."\n\
-service nginx start\n\
-echo "🚀 Starting RedInsight application..."\n\
-cd /app\n\
-su ubuntu -c "npm start" &\n\
-echo "🔐 Starting SSH daemon..."\n\
-/usr/sbin/sshd -D' > /startup.sh && \
-    chmod +x /startup.sh
-
-CMD ["/startup.sh"]
+# Define the command that runs when the container starts.
+# This starts Nginx in the foreground so Docker can manage its lifecycle.
+CMD ["nginx", "-g", "daemon off;"]
