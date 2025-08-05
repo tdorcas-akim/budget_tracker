@@ -1,5 +1,5 @@
 My Project: Budget Tracker
-Hey there! This project is my "Budget Tracker," a small web application I built to help anyone manage their money better. The idea is simple: track what you earn and spend, set budget goals, and get a clear picture of your finances. I even added a real-time currency converter, which is super handy for daily use!
+This project is a small web application I built to help anyone manage their money better. The idea is simple: track what you earn and spend, set budget goals, and get a clear picture of your finances. I even added a real-time currency converter, which is super handy for daily use!
 
 What the App Can Do
 User Management: You can sign up, log in, and even reset your password. All your info is securely saved in your browser.
@@ -29,8 +29,6 @@ Currencyapi.com (as a backup)
 
 Documentation: https://currencyapi.com/
 
-A quick note on API Key Security: For this project, the API key for Currencyapi.com is directly in the JavaScript code (script.js). In a real-world project, it should be hidden, for example, by storing it on the server or using a backend service, so it's not publicly visible.
-
 Part 1: Running the App on Your Computer
 If you just want to test the application on your own computer, it's super straightforward:
 
@@ -43,17 +41,17 @@ Open it in your browser:
 Just open the index.html file with your favorite web browser.
 Alternatively, you can use a simple local web server (like "Live Server" if you use VS Code, or python3 -m http.server in the project folder) to serve the files.
 
-Part 2: Deployment with Docker Compose (The Fun Part!)
+Part 2: Deployment with Docker Compose
 I've set up my application to be easily deployed with Docker, and I even added a load balancer to handle traffic. Here's how I did it and how you can run it yourself.
 
 My Docker Files
-Dockerfile (for the application): This file tells Docker how to build the image for my "Budget Tracker" app. It uses Nginx to serve my website files (HTML, CSS, JavaScript).
+1. Dockerfile (for the application): This file tells Docker how to build the image for my "Budget Tracker" app. It uses Nginx to serve my website files (HTML, CSS, JavaScript).
 
-lb/Dockerfile.lb (for the load balancer): This Dockerfile is specifically for my load balancer. It installs HAProxy and configures it to be ready to distribute traffic.
+2. lb/Dockerfile.lb (for the load balancer): This Dockerfile is specifically for my load balancer. It installs HAProxy and configures it to be ready to distribute traffic.
 
-lb/haproxy.cfg (the HAProxy configuration): This is the "brain" of my load balancer. It contains all the rules for HAProxy, telling it how to send requests to my two application servers and how to display the stats page.
+3. lb/haproxy.cfg (the HAProxy configuration): This is the "brain" of my load balancer. It contains all the rules for HAProxy, telling it how to send requests to my two application servers and how to display the stats page.
 
-compose.yml (my orchestration plan): This is the main file that brings everything together. It describes how my two application servers (web-01, web-02) and my load balancer (lb-01) work as a team, how they talk to each other on an internal network, and which ports are open.
+4. compose.yml (my orchestration plan): This is the main file that brings everything together. It describes how my two application servers (web-01, web-02) and my load balancer (lb-01) work as a team, how they talk to each other on an internal network, and which ports are open.
 
 Getting My App Image Ready (Docker Hub)
 Before launching everything, I make sure my application's image is on Docker Hub:
@@ -91,33 +89,26 @@ From your WSL terminal, run this command multiple times:
 
 curl -I http://localhost:8082
 
-You'll see the X-Served-By header change between web01 and web02. This proves the load balancer is correctly sending requests to each server in turn!
-(Remember to include a screenshot of your terminal showing this alternation in your submission!)
+You'll see the X-Served-By header change between web01 and web02. 
+<img width="1166" height="361" alt="image" src="https://github.com/user-attachments/assets/c1921283-1fbe-4408-89e6-cf515e5f9e4a" />
+
 
 View HAProxy statistics:
 Open your browser and go to: http://localhost:8083/haproxy?stats
 Log in with admin as the username and password as the password.
-This page will show you that my servers (web01 and web02) are both "UP" (running) and receiving traffic. This is proof that HAProxy is doing its job!
+This page will show you that my servers (web01 and web02) are both "UP" (running) and receiving traffic. 
 (Remember to include a screenshot of this page in your submission, showing the backend servers!)
 
-Managing API Keys (Security Tip - Optional)
-In a real project, you should never leave API keys directly in client-side code (like my Currencyapi.com key in script.js). Here are better ways to handle them:
-
-Environment Variables: Store the key on the server and load it when the application starts.
-
-Backend Proxy Service: Create a small service on the server that makes calls to the external API, hiding the key from the user's browser.
-
-What You'll Find in This Repository (Deliverables)
+What You'll Find in This Repository 
 GitHub Repository Link: https://github.com/tdorcas-akim/budget_tracker.git
 
 You'll find all the source files here: index.html, styles.css, script.js, nginx.conf, Dockerfile, lb/Dockerfile.lb, lb/haproxy.cfg, and compose.yml. I also have a .gitignore to keep out unnecessary or sensitive files.
 
-Demo Video Link: [PASTE YOUR YOUTUBE/VIMEO LINK HERE]
+Video Link: 
 
-The video should be under 2 minutes and will show how to use the app locally and through the load balancer.
+
 
 Credits
-Developed by: Akim
 
 Exchange Rate APIs: Exchangerate-API and Currencyapi.com
 
