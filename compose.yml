@@ -9,35 +9,40 @@ networks:
 
 services:
   web-01:
-    image: tdorcas/budget_tracker:latest
+    image: tdorcas/budget_tracker:latest # Pulling from Docker Hub
     container_name: web-01
     hostname: web-01
     networks:
       lablan:
         ipv4_address: 172.20.0.11
     ports:
-      - "2211:22"
-  
+      - "8080:80" # Map host port 8080 to Nginx app port 80 in container
+    restart: unless-stopped
 
   web-02:
-    image: tdorcas/budget_tracker:latest
+    image: tdorcas/budget_tracker:latest # Pulling from Docker Hub
     container_name: web-02
     hostname: web-02
     networks:
       lablan:
         ipv4_address: 172.20.0.12
     ports:
-      - "2212:22"
-      
+      - "8081:80" # Map host port 8081 to Nginx app port 80 in container
+    restart: unless-stopped
 
   lb-01:
-    build: ./lb
+    build:
+      context: ./lb # Build from the 'lb' directory
+      dockerfile: Dockerfile.lb # Use the new Dockerfile.lb for HAProxy
     container_name: lb-01
     hostname: lb-01
     networks:
       lablan:
         ipv4_address: 172.20.0.10
     ports:
-      - "2210:22"
-      - "8082:80"
-      - "8083:8083"
+      - "8082:80" # Map host port 8082 to HAProxy's HTTP frontend (port 80)
+      - "8083:8083" # Map host port 8083 to HAProxy's stats page (port 8083)
+    depends_on:
+      - web-01
+      - web-02
+    restart: unless-stopped

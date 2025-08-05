@@ -1,0 +1,20 @@
+# Use a base Ubuntu image
+FROM ubuntu:24.04
+
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Update apt and install HAProxy
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends haproxy && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy the custom HAProxy configuration file into the container
+# Ensure this haproxy.cfg file exists in the same 'lb' directory
+COPY haproxy.cfg /etc/haproxy/haproxy.cfg
+
+# Expose ports for HTTP traffic (80) and HAProxy stats (8083)
+EXPOSE 80 8083
+
+# Command to run HAProxy in the foreground
+CMD ["haproxy", "-f", "/etc/haproxy/haproxy.cfg"]
