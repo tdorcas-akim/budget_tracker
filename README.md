@@ -90,6 +90,7 @@ From your WSL terminal, run this command multiple times:
 curl -I http://localhost:8082
 
 You'll see the X-Served-By header change between web01 and web02. 
+
 <img width="1166" height="361" alt="image" src="https://github.com/user-attachments/assets/c1921283-1fbe-4408-89e6-cf515e5f9e4a" />
 
 
@@ -97,12 +98,14 @@ View HAProxy statistics:
 Open your browser and go to: http://localhost:8083/haproxy?stats
 Log in with admin as the username and password as the password.
 This page will show you that my servers (web01 and web02) are both "UP" (running) and receiving traffic. 
-(Remember to include a screenshot of this page in your submission, showing the backend servers!)
+
+<img width="1355" height="654" alt="image" src="https://github.com/user-attachments/assets/8479b973-120a-49d9-83ec-b2a627eef795" />
+
 
 What You'll Find in This Repository 
 GitHub Repository Link: https://github.com/tdorcas-akim/budget_tracker.git
 
-You'll find all the source files here: index.html, styles.css, script.js, nginx.conf, Dockerfile, lb/Dockerfile.lb, lb/haproxy.cfg, and compose.yml. I also have a .gitignore to keep out unnecessary or sensitive files.
+You'll find all the source files here: index.html, styles.css, script.js, nginx.conf, Dockerfile, lb/Dockerfile.lb, lb/haproxy.cfg, and compose.yml. 
 
 Video Link: 
 
