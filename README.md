@@ -91,7 +91,8 @@ curl -I http://localhost:8082
 
 You'll see the X-Served-By header change between web01 and web02. 
 
-<img width="1166" height="361" alt="image" src="https://github.com/user-attachments/assets/c1921283-1fbe-4408-89e6-cf515e5f9e4a" />
+<img width="1343" height="681" alt="Daa one again(curl)" src="https://github.com/user-attachments/assets/67abc49a-141c-4728-8232-c4d621bb1448" />
+
 
 
 View HAProxy statistics:
@@ -108,8 +109,7 @@ GitHub Repository Link: https://github.com/tdorcas-akim/budget_tracker.git
 You'll find all the source files here: index.html, styles.css, script.js, nginx.conf, Dockerfile, lb/Dockerfile.lb, lb/haproxy.cfg, and compose.yml. 
 
 Video Link: 
-
-
+https://youtu.be/EE-YnIpIJQs?si=Z3CWzwjhlbpihdy-
 
 Credits
 
